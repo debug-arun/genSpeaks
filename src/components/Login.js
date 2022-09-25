@@ -27,7 +27,7 @@ export default function Login() {
         navigate('/admin');
       else navigate('/dashboard');
     } catch (err) {
-      console.error(err);
+      // console.error(err);
       setError("Failed to Log in");
     }
     setLoading(false);
