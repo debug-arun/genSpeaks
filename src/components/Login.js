@@ -2,6 +2,8 @@ import React, { useRef, useState } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
+import { ref, get } from 'firebase/database';
+import { db } from "../firebase";
 
 export default function Login() {
   const emailRef = useRef();
@@ -17,9 +19,15 @@ export default function Login() {
     try {
       setError("");
       setLoading(true);
-      await login(emailRef.current.value, passwordRef.current.value);
-      navigate("/dashboard");
-    } catch {
+      const { user } = await login(emailRef.current.value, passwordRef.current.value);
+      let roles = await get(ref(db, 'users/'+user.uid)).then(
+        snapshot => snapshot.toJSON());
+      roles = Object.values(roles.roles);
+      if(roles.find(role => role === 5001))  
+        navigate('/admin');
+      else navigate('/dashboard');
+    } catch (err) {
+      console.error(err);
       setError("Failed to Log in");
     }
     setLoading(false);

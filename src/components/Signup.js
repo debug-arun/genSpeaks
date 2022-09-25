@@ -2,6 +2,8 @@ import React, { useRef, useState } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
+import { ref, set } from 'firebase/database';
+import { db } from '../firebase';
 
 export default function Signup() {
   const emailRef = useRef();
@@ -22,9 +24,15 @@ export default function Signup() {
     try {
       setError("");
       setLoading(true);
-      await signup(emailRef.current.value, passwordRef.current.value);
-      navigate("/dashboard");
-    } catch {
+      const signed = await signup(emailRef.current.value, passwordRef.current.value);
+      const uid = signed.user.uid;
+      set(ref(db, 'users/'+uid), {
+        email: emailRef.current.value,
+        roles: [3000]
+      })
+      navigate("/login");
+    } catch(err) {
+      console.log(err);
       setError("Failed to create an account");
     }
     setLoading(false);
