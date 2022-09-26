@@ -3,7 +3,7 @@ import { Card, Button, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function Dashboard() {
+const Dashboard = () => {
   const [error, setError] = useState("");
   const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
@@ -13,7 +13,8 @@ export default function Dashboard() {
     try {
       await logout();
       navigate("/login");
-    } catch {
+    } catch(err) {
+      console.log(err)
       setError("Failed to log out");
     }
   }
@@ -40,6 +41,9 @@ export default function Dashboard() {
           Log Out
         </Button>
       </div>
+      <Link to="/admin">Click here for admin</Link>
     </>
   );
 }
+
+export default Dashboard;
