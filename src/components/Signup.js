@@ -32,7 +32,7 @@ export default function Signup() {
       })
       navigate("/login");
     } catch(err) {
-      // console.log(err);
+      console.log(err);
       setError("Failed to create an account");
     }
     setLoading(false);

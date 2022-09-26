@@ -41,6 +41,7 @@ const Dashboard = () => {
           Log Out
         </Button>
       </div>
+      <Link to="/admin">Click here for admin</Link>
     </>
   );
 }

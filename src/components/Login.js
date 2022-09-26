@@ -22,13 +22,17 @@ export default function Login() {
       const { user } = await login(emailRef.current.value, passwordRef.current.value);
       let roles = await get(ref(db, 'users/'+user.uid)).then(
         snapshot => snapshot.toJSON());
+      if(!roles){
+        setError("Oops! You'll need to sign up first...");
+        return
+      }
       roles = Object.values(roles.roles);
       if(roles.find(role => role === 5001))  
         navigate('/admin');
       else navigate('/dashboard');
     } catch (err) {
-      // console.error(err);
-      setError("Failed to Log in");
+      console.log(err);
+      setError("Failed to login");
     }
     setLoading(false);
   }

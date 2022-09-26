@@ -28,7 +28,7 @@ function App() {
               <Route
                 path="/dashboard"
                 element={
-                  <PrivateRoute>
+                  <PrivateRoute allowedRoles={[3000, 5001]}>
                     <Dashboard />
                   </PrivateRoute>
                 }
@@ -36,7 +36,7 @@ function App() {
               <Route
                 path="/update-profile"
                 element={
-                  <PrivateRoute>
+                  <PrivateRoute allowedRoles={[3000, 5001]}>
                     <UpdateProfile />
                   </PrivateRoute>
                 }
@@ -44,7 +44,7 @@ function App() {
               <Route
                 path="/admin"
                 element={
-                  <PrivateRoute>
+                  <PrivateRoute allowedRoles={[5001]}>
                     <Admin />
                   </PrivateRoute>
                 }

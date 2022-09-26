@@ -1,5 +1,6 @@
+import { get, ref } from "firebase/database";
 import React, { useContext, useEffect, useState } from "react";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
 
 const AuthContext = React.createContext();
 
@@ -10,13 +11,19 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
+  const [roles, setRoles] = useState()
 
   function signup(email, password) {
     return auth.createUserWithEmailAndPassword(email, password);
   }
 
-  function login(email, password) {
-    return auth.signInWithEmailAndPassword(email, password);
+  async function login(email, password) {
+    const logged = await auth.signInWithEmailAndPassword(email, password);
+    const { user } = logged;
+    let roleSet = await get(ref(db, 'users/'+user.uid)).then(
+      snapshot => snapshot.toJSON());
+    setRoles(Object.values(roleSet.roles));
+    return logged
   }
 
   function logout() {
@@ -52,6 +59,7 @@ export function AuthProvider({ children }) {
     resetPassword,
     updateEmail,
     updatePassword,
+    roles
   };
   return (
     <AuthContext.Provider value={value}>
