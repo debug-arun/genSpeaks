@@ -6,7 +6,9 @@ const Unauthorized = () => {
     return (
         <Card>
             <div className='card-body'>
-                <h1 className="card-title">You are unauthorized to use this page</h1>
+                <h1 className="card-title">
+                    No such page exists :(
+                </h1>
             </div>
         </Card>
     )
