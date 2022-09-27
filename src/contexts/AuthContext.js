@@ -17,13 +17,8 @@ export function AuthProvider({ children }) {
     return auth.createUserWithEmailAndPassword(email, password);
   }
 
-  async function login(email, password) {
-    const logged = await auth.signInWithEmailAndPassword(email, password);
-    const { user } = logged;
-    let roleSet = await get(ref(db, 'users/'+user.uid)).then(
-      snapshot => snapshot.toJSON());
-    setRoles(Object.values(roleSet.roles));
-    return logged
+  function login(email, password) {
+    return auth.signInWithEmailAndPassword(email, password);
   }
 
   function logout() {
@@ -43,8 +38,15 @@ export function AuthProvider({ children }) {
   }
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged(async(user) => {
       setCurrentUser(user);
+      if(!user){
+        setLoading(false);
+        return;
+      }
+      let roleSet = await get(ref(db, 'users/'+user.uid)).then(
+        snapshot => snapshot.toJSON());
+      setRoles(Object.values(roleSet.roles));
       setLoading(false);
     });
 

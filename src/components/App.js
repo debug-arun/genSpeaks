@@ -28,7 +28,7 @@ function App() {
               <Route
                 path="/dashboard"
                 element={
-                  <PrivateRoute allowedRoles={[3000, 5001]}>
+                  <PrivateRoute>
                     <Dashboard />
                   </PrivateRoute>
                 }

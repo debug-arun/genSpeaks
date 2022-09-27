@@ -5,11 +5,10 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const [error, setError] = useState("");
-  const { currentUser, logout } = useAuth();
+  const { currentUser, logout, roles } = useAuth();
   const navigate = useNavigate();
   async function handleLogout() {
     setError("");
-
     try {
       await logout();
       navigate("/login");
@@ -41,7 +40,7 @@ const Dashboard = () => {
           Log Out
         </Button>
       </div>
-      <Link to="/admin">Click here for admin</Link>
+      { roles.includes(5001) && <Link to="/admin">Click here for admin</Link>}
     </>
   );
 }

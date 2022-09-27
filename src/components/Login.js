@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
@@ -8,7 +8,7 @@ import { db } from "../firebase";
 export default function Login() {
   const emailRef = useRef();
   const passwordRef = useRef();
-  const { login } = useAuth();
+  const { login, currentUser } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -36,7 +36,12 @@ export default function Login() {
     }
     setLoading(false);
   }
-
+  
+  useEffect(() => {
+    if(currentUser)
+      navigate("/dashboard")
+  }, [])
+  
   return (
     <>
       <Card>
