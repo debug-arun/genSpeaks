@@ -3,14 +3,13 @@ import "firebase/compat/auth";
 import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAEetky776F5cT9M55xstITDlNJz8UMLpY",
-  authDomain: "genspeaks2022.firebaseapp.com",
-  projectId: "genspeaks2022",
-  storageBucket: "genspeaks2022.appspot.com",
-  messagingSenderId: "470000240500",
-  appId: "1:470000240500:web:cfdb4b407134d322044e21",
-  measurementId: "G-Y93E6W0WGX",
-  databaseURL: "https://genspeaks2022-default-rtdb.asia-southeast1.firebasedatabase.app"
+  apiKey: "AIzaSyBGH9uFsF3MHuz78C8X4bqGiaTHm6RKHw0",
+  authDomain: "genspeaks-podcasts.firebaseapp.com",
+  projectId: "genspeaks-podcasts",
+  storageBucket: "genspeaks-podcasts.appspot.com",
+  messagingSenderId: "436042375035",
+  appId: "1:436042375035:web:9cf8718c537634f3f367de",
+  measurementId: "G-M187GSMPEQ"
 };
 
 const app = firebase.initializeApp(firebaseConfig);
